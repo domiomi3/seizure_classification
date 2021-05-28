@@ -1,0 +1,6 @@
+##Place for requirements
+#PyTorch for deep learning tools
+torch
+#python interface for writing/reading edf files
+pyedflib
+

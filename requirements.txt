@@ -3,4 +3,6 @@
 torch
 #python interface for writing/reading edf files
 pyedflib
+#python package developed to define pipeline for EEG preprocessing
+PyEEGLab
 

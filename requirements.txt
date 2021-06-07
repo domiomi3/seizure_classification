@@ -1,8 +1,96 @@
-##Place for requirements
-#PyTorch for deep learning tools
-torch
-#python interface for writing/reading edf files
-pyedflib
-#python package developed to define pipeline for EEG preprocessing
-PyEEGLab
-
+antropy==0.1.4
+argon2-cffi==20.1.0
+async-generator==1.10
+attrs==21.2.0
+backcall==0.2.0
+bleach==3.3.0
+certifi==2021.5.30
+cffi==1.14.5
+chardet==4.0.0
+cycler==0.10.0
+dataclasses==0.6
+decorator==5.0.9
+defusedxml==0.7.1
+entrypoints==0.3
+greenlet==1.1.0
+idna==2.10
+ipykernel==5.5.5
+ipython==7.24.1
+ipython-genutils==0.2.0
+ipywidgets==7.6.3
+jedi==0.18.0
+Jinja2==3.0.1
+joblib==1.0.1
+jsonschema==3.2.0
+jupyter-client==6.1.12
+jupyter-core==4.7.1
+jupyterlab-pygments==0.1.2
+jupyterlab-widgets==1.0.0
+kiwisolver==1.3.1
+littleutils==0.2.2
+llvmlite==0.36.0
+lspopt==1.1.1
+MarkupSafe==2.0.1
+matplotlib==3.4.2
+matplotlib-inline==0.1.2
+mistune==0.8.4
+mkl-fft==1.3.0
+mkl-random @ file:///tmp/build/80754af9/mkl_random_1618853849286/work
+mkl-service==2.3.0
+mne==0.23.0
+nbclient==0.5.3
+nbconvert==6.0.7
+nbformat==5.1.3
+nest-asyncio==1.5.1
+notebook==6.4.0
+numba @ file:///tmp/build/80754af9/numba_1616774046117/work
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1620830962040/work
+olefile==0.46
+outdated==0.2.1
+packaging==20.9
+pandas==1.2.4
+pandocfilters==1.4.3
+parso==0.8.2
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow @ file:///tmp/build/80754af9/pillow_1617383569452/work
+prometheus-client==0.11.0
+prompt-toolkit==3.0.18
+ptyprocess==0.7.0
+pycparser==2.20
+pyEDFlib==0.1.22
+PyEEGLab==0.10.0
+Pygments==2.9.0
+pyparsing==2.4.7
+pyriemann==0.2.6
+pyrsistent==0.17.3
+python-dateutil==2.8.1
+pytz==2021.1
+pyzmq==22.1.0
+regex @ file:///home/conda/feedstock_root/build_artifacts/regex_1617644422046/work
+requests==2.25.1
+resampy==0.2.2
+scikit-learn==0.24.2
+scipy==1.6.3
+seaborn==0.11.1
+Send2Trash==1.5.0
+six @ file:///tmp/build/80754af9/six_1605205327372/work
+SQLAlchemy==1.4.17
+stft==0.5.2
+stochastic==0.6.0
+tensorpac==0.6.5
+terminado==0.10.0
+testpath==0.5.0
+threadpoolctl==2.1.0
+torch==1.8.1
+torchaudio==0.8.0a0+e4e171a
+torchvision==0.9.1
+tornado==6.1
+traitlets==5.0.5
+typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
+urllib3==1.26.5
+wcwidth==0.2.5
+webencodings==0.5.1
+wfdb==3.4.0
+widgetsnbextension==3.5.1
+yasa==0.4.1

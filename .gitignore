@@ -135,3 +135,7 @@ data/
 # Project settings
 idea/
 .idea/
+
+# Not my repos
+.irregulars-neureka-codebase/
+.Neureka-2020-Epilepsy-Challenge/

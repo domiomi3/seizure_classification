@@ -1,37 +1,47 @@
 antropy==0.1.4
+appdirs @ file:///home/conda/feedstock_root/build_artifacts/appdirs_1603108395799/work
 argon2-cffi==20.1.0
 async-generator==1.10
 attrs==21.2.0
+audioread @ file:///home/conda/feedstock_root/build_artifacts/audioread_1607457396158/work
 backcall==0.2.0
 bleach==3.3.0
+brotlipy==0.7.0
+cached-property @ file:///tmp/build/80754af9/cached-property_1600785575025/work
 certifi==2021.5.30
-cffi==1.14.5
-chardet==4.0.0
+cffi @ file:///home/conda/feedstock_root/build_artifacts/cffi_1613413861439/work
+chardet @ file:///home/conda/feedstock_root/build_artifacts/chardet_1610093490430/work
+cryptography @ file:///home/conda/feedstock_root/build_artifacts/cryptography_1616851476134/work
 cycler==0.10.0
 dataclasses==0.6
-decorator==5.0.9
+decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_1621187651333/work
 defusedxml==0.7.1
+dill @ file:///tmp/build/80754af9/dill_1605066453875/work
 entrypoints==0.3
+et-xmlfile==1.1.0
 greenlet==1.1.0
-idna==2.10
+h5py @ file:///tmp/build/80754af9/h5py_1622088445520/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
 ipykernel==5.5.5
 ipython==7.24.1
 ipython-genutils==0.2.0
 ipywidgets==7.6.3
+jdcal==1.4.1
 jedi==0.18.0
 Jinja2==3.0.1
-joblib==1.0.1
+joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1612898609989/work
 jsonschema==3.2.0
 jupyter-client==6.1.12
 jupyter-core==4.7.1
 jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.0
-kiwisolver==1.3.1
+kiwisolver @ file:///home/conda/feedstock_root/build_artifacts/kiwisolver_1610099769230/work
+librosa @ file:///home/conda/feedstock_root/build_artifacts/librosa_1622025601369/work
 littleutils==0.2.2
 llvmlite==0.36.0
 lspopt==1.1.1
 MarkupSafe==2.0.1
-matplotlib==3.4.2
+matplotlib @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-suite_1620506037462/work
 matplotlib-inline==0.1.2
 mistune==0.8.4
 mkl-fft==1.3.0
@@ -46,51 +56,60 @@ notebook==6.4.0
 numba @ file:///tmp/build/80754af9/numba_1616774046117/work
 numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1620830962040/work
 olefile==0.46
+openpyxl @ file:///tmp/build/80754af9/openpyxl_1615411699337/work
 outdated==0.2.1
-packaging==20.9
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1612459636436/work
 pandas==1.2.4
 pandocfilters==1.4.3
 parso==0.8.2
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow @ file:///tmp/build/80754af9/pillow_1617383569452/work
+pooch @ file:///home/conda/feedstock_root/build_artifacts/pooch_1606467285986/work
+progressbar==2.5
 prometheus-client==0.11.0
 prompt-toolkit==3.0.18
 ptyprocess==0.7.0
-pycparser==2.20
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
 pyEDFlib==0.1.22
 PyEEGLab==0.10.0
 Pygments==2.9.0
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1608055815057/work
 pyparsing==2.4.7
 pyriemann==0.2.6
 pyrsistent==0.17.3
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1610291447907/work
 python-dateutil==2.8.1
 pytz==2021.1
+PyWavelets @ file:///home/conda/feedstock_root/build_artifacts/pywavelets_1607290812047/work
 pyzmq==22.1.0
 regex @ file:///home/conda/feedstock_root/build_artifacts/regex_1617644422046/work
-requests==2.25.1
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1608156231189/work
 resampy==0.2.2
-scikit-learn==0.24.2
+scikit-learn @ file:///tmp/build/80754af9/scikit-learn_1621370412049/work
 scipy==1.6.3
 seaborn==0.11.1
 Send2Trash==1.5.0
 six @ file:///tmp/build/80754af9/six_1605205327372/work
+SoundFile @ file:///home/conda/feedstock_root/build_artifacts/pysoundfile_1607011569782/work
 SQLAlchemy==1.4.17
 stft==0.5.2
 stochastic==0.6.0
+tabulate==0.8.9
 tensorpac==0.6.5
 terminado==0.10.0
 testpath==0.5.0
-threadpoolctl==2.1.0
+threadpoolctl @ file:///tmp/tmp79xdzxkt/threadpoolctl-2.1.0-py3-none-any.whl
 torch==1.8.1
 torchaudio==0.8.0a0+e4e171a
 torchvision==0.9.1
-tornado==6.1
+tornado @ file:///home/conda/feedstock_root/build_artifacts/tornado_1610094706440/work
 traitlets==5.0.5
 typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
-urllib3==1.26.5
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1622056799390/work
 wcwidth==0.2.5
 webencodings==0.5.1
 wfdb==3.4.0
 widgetsnbextension==3.5.1
+xlrd @ file:///tmp/build/80754af9/xlrd_1608072521494/work
 yasa==0.4.1

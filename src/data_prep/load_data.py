@@ -33,5 +33,5 @@ def loadRecording(filename, wiener=False):
     # Preprocess
     # data = preprocess.preprocess(data, fs, wiener)
 
-    return (fs, data, labels_mont)
+    return fs, data, labels_mont
 

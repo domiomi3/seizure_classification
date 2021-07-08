@@ -129,9 +129,16 @@ dmypy.json
 .pyre/
 
 # Data
-./data
 data/
 
 # Project settings
 idea/
 .idea/
+
+# Not my repos
+irregulars-neureka-codebase/
+Neureka-2020-Epilepsy-Challenge/
+seizure-type-classification-tuh/
+
+# Test dir
+test/

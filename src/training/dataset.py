@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 
 class EEGDataset(Dataset):
     def __init__(self, data_dir: str, shuffle=True, split="train", task="seizure"):
-        self.splits = ["train", "dev"]
+        self.splits = ["train", "val"]
         self.cv_files = {"patient": "/home/dominika/ML Projects/MSc/seizure_detection/src/data_preparation"
                                     "/cv_split_3_fold_patient_wise_v1.5.2.pkl",
                          "seizure": "/home/dominika/ML Projects/MSc/seizure_detection/src/data_preparation"
@@ -28,7 +28,6 @@ class EEGDataset(Dataset):
 
     def _create_sampling_windows_indices(self, shuffle=True):
         split_files = pickle.load(open(self.cv_file, 'rb'))["1"][self.split]
-        # .data[self.split]
         sw_array = []
         for pkl_file in split_files:
             sw_no = self.get_sampling_windows_number(pkl_file)
@@ -38,8 +37,27 @@ class EEGDataset(Dataset):
             random.shuffle(sw_array)
         return sw_array
 
-    def generate_random_batch(self, size: int, idx: int):
-        return self.indices[(idx*size):(idx*size+size-1)]
+    def create_split_dataset(self, transformation=None):
+        batch = self.get_indices(self.indices)
+        data = []
+        labels = []
+        for index in batch:
+            if transformation == "KNN":
+                data.append((self.__getitem__(index)[0]).flatten())
+            else:
+                data.append((self.__getitem__(index)[0]))
+            labels.append(self.__getitem__(index)[1])
+        return data, labels
+
+    def generate_random_indices(self, size: int, idx: int):
+        return self.indices[(idx*size):(idx*size+size)]
+
+    @staticmethod
+    def get_index(file: str):
+        return int(file.split("_index_")[1])
+
+    def get_indices(self, file_list: list):
+        return [self.get_index(file) for file in file_list]
 
     def get_sampling_windows_number(self, file: str):
         data = self.load_pickle(file)

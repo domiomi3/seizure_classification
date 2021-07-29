@@ -4,8 +4,8 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 
 class KNNTrainer(ModelTrainer):
-    def __init__(self, data_dir: str, task: str):
-        super().__init__(data_dir, task)
+    def __init__(self, data_dir: str, task: str, cv_files: dict):
+        super().__init__(data_dir, task, cv_files)
 
     @staticmethod
     def image_to_feature_vector(image):

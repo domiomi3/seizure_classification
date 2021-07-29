@@ -8,12 +8,10 @@ from torch.utils.data import Dataset
 
 
 class EEGDataset(Dataset):
-    def __init__(self, data_dir: str, shuffle=True, split="train", task="seizure"):
+    def __init__(self, data_dir: str,  cv_files: dict, shuffle=True, split="train", task="seizure"):
         self.splits = ["train", "val"]
-        self.cv_files = {"patient": "/home/dominika/ML Projects/MSc/seizure_detection/src/data_preparation"
-                                    "/cv_split_3_fold_patient_wise_v1.5.2.pkl",
-                         "seizure": "/home/dominika/ML Projects/MSc/seizure_detection/src/data_preparation"
-                                    "/cv_split_5_fold_seizure_wise_v1.5.2.pkl"}
+        self.cv_files = {"patient": cv_files["patient"],
+                         "seizure": cv_files["seizure"]}
         self.data_dir = data_dir
         self.seizure_type_data = collections.namedtuple('seizure_type_data', ['patient_id', 'seizure_type', 'data'])
         if task in self.cv_files.keys():

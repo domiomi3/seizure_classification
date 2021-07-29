@@ -17,6 +17,7 @@ class ModelTrainer(ABC):
     def __init__(self,
                  data_dir: str,
                  task: str,
+                 cv_files: dict,
                  batch_size=1000,
                  learning_rate=0.001,
                  num_epochs=20,
@@ -25,6 +26,7 @@ class ModelTrainer(ABC):
                  ):
 
         self.batch_size = batch_size
+        self.cv_files = cv_files
         self.data_dir = data_dir
         self.learning_rate = learning_rate
         self.num_epochs = num_epochs
@@ -43,7 +45,7 @@ class ModelTrainer(ABC):
         datasets = {}
 
         for split in ["train", "val"]:
-            datasets[split] = EEGDataset(data_dir=self.data_dir, split=split)
+            datasets[split] = EEGDataset(data_dir=self.data_dir, split=split, cv_files=self.cv_files)
         return datasets
 
     def train(self):

@@ -4,6 +4,7 @@ import re
 import os
 
 import dill as pickle
+from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset
 
 
@@ -35,16 +36,19 @@ class EEGDataset(Dataset):
             random.shuffle(sw_array)
         return sw_array
 
-    def create_split_dataset(self, transformation=None):
-        batch = self.get_indices(self.indices)
+    def create_split_dataset(self, batch_size=None, idx=None, transformation=None):
+        if batch_size:
+            batch = self.get_indices(self.generate_random_indices(size=batch_size, idx=idx))
+        else:
+            batch = self.get_indices(self.indices)
         data = []
         labels = []
         for index in batch:
-            if transformation == "KNN":
+            if transformation == "KNN" or transformation == "SGD":
                 data.append((self.__getitem__(index)[0]).flatten())
-            else:
-                data.append((self.__getitem__(index)[0]))
             labels.append(self.__getitem__(index)[1])
+        if transformation == "SGD":
+            StandardScaler().fit(data)
         return data, labels
 
     def generate_random_indices(self, size: int, idx: int):

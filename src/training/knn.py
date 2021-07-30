@@ -4,21 +4,15 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 
 class KNNTrainer(ModelTrainer):
-    def __init__(self, data_dir: str, task: str, cv_files: dict):
-        super().__init__(data_dir, task, cv_files)
+    def __init__(self, task: str):
+        super().__init__(task)
 
-    @staticmethod
-    def image_to_feature_vector(image):
-        return image.flatten()
-
-    def train(self):
-        train_data, train_labels = self.datasets["train"].create_split_dataset(transformation="KNN")
+    def train(self, train_data, train_labels):
         model = KNeighborsClassifier(algorithm="kd_tree")
         model.fit(train_data, train_labels)
         return model
 
-    def evaluate(self, model):
-        dev_data, dev_labels = self.datasets["val"].create_split_dataset(transformation=None)
+    def evaluate(self, model, dev_data, dev_labels):
         pred_labels = model.predict(dev_data)
         result = confusion_matrix(dev_labels, pred_labels)
         print("Confusion matrix: ", result)

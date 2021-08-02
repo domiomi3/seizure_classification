@@ -1,76 +1,64 @@
-import collections
-import random
 import re
 import os
 
+import numpy as np
+import torch
+
 import dill as pickle
-from sklearn.preprocessing import StandardScaler
+
+from collections import Counter
+from torchvision import transforms
 from torch.utils.data import Dataset
 
 
 class EEGDataset(Dataset):
-    def __init__(self, data_dir: str,  cv_files: dict, shuffle=True, split="train", task="seizure"):
+    def __init__(self, data_dir: str, cv_file: str, split="train", task="seizure", augmentation="original", logger=None):
         self.splits = ["train", "val"]
-        self.cv_files = {"patient": cv_files["patient"],
-                         "seizure": cv_files["seizure"]}
+        self.tasks = ["seizure", "patient"]
+        self.cv_file = cv_file
         self.data_dir = data_dir
-        self.seizure_type_data = collections.namedtuple('seizure_type_data', ['patient_id', 'seizure_type', 'data'])
-        if task in self.cv_files.keys():
-            self.cv_file = self.cv_files[task]
+
+        if task in self.tasks:
+            self.task = task
         else:
-            raise NameError("Invalid task name")
+            raise NameError("Invalid split name")
         if split in self.splits:
             self.split = split
         else:
             raise NameError("Invalid split name")
-        self.indices = self._create_sampling_windows_indices(shuffle=shuffle)
+        self.labels = self._create_labels()
 
-    def _create_sampling_windows_indices(self, shuffle=True):
-        split_files = pickle.load(open(self.cv_file, 'rb'))["1"][self.split]
-        sw_array = []
-        for pkl_file in split_files:
-            sw_no = self.get_sampling_windows_number(pkl_file)
-            for sw in range(0, sw_no-1):
-                sw_array.append(str(pkl_file + f"_index_{sw}"))
-        if shuffle:
-            random.shuffle(sw_array)
-        return sw_array
+        data_transformations = {
+            "original": [],
+            "flatten": [transforms.ToTensor(), transforms.Lambda(lambda x: torch.flatten(x))]
+        }
 
-    def create_split_dataset(self, batch_size=None, idx=None, transformation=None):
-        if batch_size:
-            batch = self.get_indices(self.generate_random_indices(size=batch_size, idx=idx))
+        if type(augmentation) is list:
+            applied_augmentations = []
+            for augmentation_method in augmentation:
+                if logger is not None:
+                    logger.info("Activated augmentation '%s' for %s set.", augmentation_method, split)
+                applied_augmentations.extend(data_transformations[augmentation_method])
         else:
-            batch = self.get_indices(self.indices)
-        data = []
+            if logger is not None:
+                logger.info("Activated augmentation '%s' for %s set.", augmentation, split)
+            applied_augmentations = data_transformations[augmentation]
+
+        self.transformations = transforms.Compose([*applied_augmentations])
+
+    def class_distribution(self):
+        """Returns dict of (label: number_of_samples)"""
+        return dict(Counter(self.labels))
+
+    def class_labels(self):
+        return np.unique(self.labels)
+
+    def _create_labels(self):
+        split_files = pickle.load(open(os.path.join(self.data_dir, self.cv_file), 'rb'))["1"][self.split]
         labels = []
-        for index in batch:
-            if transformation == "KNN" or transformation == "SGD":
-                data.append((self.__getitem__(index)[0]).flatten())
-            labels.append(self.__getitem__(index)[1])
-        if transformation == "SGD":
-            StandardScaler().fit(data)
-        return data, labels
-
-    def generate_random_indices(self, size: int, idx: int):
-        return self.indices[(idx*size):(idx*size+size)]
-
-    @staticmethod
-    def get_index(file: str):
-        return int(file.split("_index_")[1])
-
-    def get_indices(self, file_list: list):
-        return [self.get_index(file) for file in file_list]
-
-    def get_sampling_windows_number(self, file: str):
-        data = self.load_pickle(file)
-        return data.shape[0]
-
-    def get_max_sampling_windows_number(self):
-        max_sw_no = 0
-        for pkl_file in os.listdir(self.data_dir):
-            sw_no = self.get_sampling_windows_number(pkl_file)
-            max_sw_no = sw_no if sw_no > max_sw_no else max_sw_no
-        return max_sw_no
+        for pkl_file in split_files:
+            labels.append(pkl_file.split("_")[5].split(".")[0])
+        return labels
 
     def load_pickle(self, file: str):
         for pkl_file in os.listdir(self.data_dir):
@@ -78,16 +66,19 @@ class EEGDataset(Dataset):
                 return pickle.load(open(os.path.join(self.data_dir, file), 'rb')).data
         raise NameError("Invalid file name")
 
+    def num_classes(self):
+        return len(np.unique(self.labels))
+
     def __len__(self):
-        return len(self.indices)
+        return len(self.labels)
 
     def __getitem__(self, idx: int):
-        if idx in range(0, self.__len__()):
-            file, index = self.indices[idx].split("_index_")
-            data = self.load_pickle(file)
-            sampling_window = data[int(index)]
-            label = file.split("_")[5].split(".")[0]
-
-            return sampling_window, label
-        else:
+        if idx not in range(0, self.__len__()-1):
             raise NameError("Invalid sample index")
+        split_files = pickle.load(open(os.path.join(self.data_dir, self.cv_file), 'rb'))["1"][self.split]
+        file = split_files[idx]
+        data = np.asarray(self.load_pickle(file).data)
+        label = file.split("_")[5].split(".")[0]
+        if self.transformations:
+            data = self.transformations(data)
+        return data, label

@@ -34,7 +34,7 @@ class SGDTrainer(ModelTrainer, ABC):
         # new_class_weights = self.adjust_weights(class_weights)
         model = SGDClassifier(shuffle=True, loss='log', class_weight=class_weights)
         self.logger.setup_model(model)
-        model.to(self.setup_device())
+        # model.to(self.setup_device())
         for epoch in range(1, self.num_epochs + 1):
             self.logger.info("Epoch %i/%i", epoch, self.num_epochs)
             self.logger.info('-' * 10)
@@ -46,7 +46,7 @@ class SGDTrainer(ModelTrainer, ABC):
                 if i % 5:
                     for d_, l_ in self.dataloaders['val']:
                         # StandardScaler().fit(d_)
-                        pred.append(sgd_model.predict(d_))
+                        pred.append(model.predict(d_))
                         targets.append(l_)
                     result1 = classification_report(targets, pred)
                     print("Classification report: ", result1)

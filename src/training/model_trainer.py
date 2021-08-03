@@ -29,7 +29,7 @@ class ModelTrainer(ABC):
                  num_epochs=20,
                  num_workers=2,
                  optimizer="Adam",
-                 is_knn=True,
+                 is_knn=False,
                  sampling: str = None,
                  ):
 
@@ -62,11 +62,10 @@ class ModelTrainer(ABC):
         self.dataloaders = dataloaders
         self.device = self.setup_device()
 
-
     def collate_fn_padd(self, batch):
         labels = [t[1] for t in batch]
         lengths = torch.tensor([t[0].shape[0] for t in batch]).to(self.device)
-        max_len = max(lengths)
+        max_len = 3141120
         a = [torch.Tensor(t[0].float()).to(self.device) for t in batch]
         new_batch = [torch.nn.ConstantPad1d((0, max_len-lengths[i]), 0)(d).numpy() for i,d in enumerate(a)]
         return new_batch, labels

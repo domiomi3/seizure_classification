@@ -73,10 +73,10 @@ class EEGDataset(Dataset):
         return len(self.labels)
 
     def __getitem__(self, idx: int):
-        if idx not in range(0, self.__len__()-1):
-            raise NameError("Invalid sample index")
+        # if idx not in range(1, self.__len__()):
+        #     raise NameError("Invalid sample index")
         split_files = pickle.load(open(os.path.join(self.data_dir, self.cv_file), 'rb'))["1"][self.split]
-        file = split_files[idx]
+        file = split_files[idx-1]
         data = np.asarray(self.load_pickle(file).data)
         label = file.split("_")[5].split(".")[0]
         if self.transformations:

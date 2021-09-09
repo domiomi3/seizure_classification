@@ -1,0 +1,22 @@
+{
+    "os": "Linux-5.11.0-27-generic-x86_64-with-glibc2.10",
+    "python": "3.8.10",
+    "heartbeatAt": "2021-08-30T11:58:24.299063",
+    "startedAt": "2021-08-30T11:58:21.130375",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/dominika/ML Projects/MSc/seizure_detection/src/training/main.py",
+    "codePath": "src/training/main.py",
+    "git": {
+        "remote": "https://github.com/domiomi3/seizure_detection.git",
+        "commit": "90f4a751dacd621985585fc86ba9db6d698d1074"
+    },
+    "email": "matus.dominika@gmail.com",
+    "root": "/home/dominika/ML Projects/MSc/seizure_detection",
+    "host": "domiomi3000",
+    "username": "dominika",
+    "executable": "/home/dominika/anaconda3/envs/seizuredetection-env/bin/python"
+}

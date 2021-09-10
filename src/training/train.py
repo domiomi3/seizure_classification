@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from wandb.keras import WandbCallback
 
 
-from src.data_preparation.preprocess import DataPreparator
+from test.preprocess import DataPreparator
 
 
 class ModelTrainer:
@@ -33,7 +33,7 @@ class ModelTrainer:
         data, labels = preparator.prepare_dataset()
         self.data = data
         self.labels = labels
-        self.dataset_params = [preparator.adjs, preparator.input_shape, preparator.classes]
+        self.dataset_params = [preparator.adjs, preparator.matrix_shape, preparator.classes]
 
     def train_model(self, model, is_wandb=True):
         wandb.login()

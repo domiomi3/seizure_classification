@@ -1,5 +1,3 @@
-from test.models.cnn_model import CNNModel
-
 from torch import stack, max
 from torch.nn import Linear, Softmax, LSTM
 

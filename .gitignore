@@ -142,4 +142,5 @@ seizure-type-classification-tuh/
 
 # Test dir
 test/
-src/wandb/
+/src/wandb/
+/test/

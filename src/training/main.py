@@ -6,6 +6,9 @@ import numpy as np
 
 from src.data_preparation.preprocess import DataPreparator
 from models.cnn_dense import CNNDenseModel
+from models.cnn_lstm import CNNLSTMModel
+
+from torch import Tensor
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 from sklearn.model_selection import train_test_split
@@ -18,13 +21,15 @@ data, labels = preparator.get_data(), preparator.get_labels()
 adjs = preparator.adjs
 window_input_shape = preparator.input_shape
 num_classes = preparator.classes
+weights = preparator.get_weights()
 
 batch_size = 32
 input_shape = (batch_size, adjs) + window_input_shape
-cnn_dense = CNNDenseModel(input_shape, num_classes)
+# cnn_dense = CNNDenseModel(input_shape, num_classes)
+cnn_lstm=CNNLSTMModel(input_shape, num_classes)
 
-criterion = CrossEntropyLoss()
-optimizer = Adam(cnn_dense.parameters(), lr=1e-5)
+criterion = CrossEntropyLoss(weight=weights)
+optimizer = Adam(cnn_lstm.parameters(), lr=1e-5)
 metric = torchmetrics.Accuracy()
 
 n_epochs = 50
@@ -32,12 +37,12 @@ wandb.login()
 wandb.init(project="seizure-detection",
            entity="domiomi3",
            config={
-               "architecture": "CNN-Dense",
+               "architecture": "CNN-LSTM",
                "dataset": "Temple University Hospital EEG Seizure Dataset'@'v1.5.2 ",
            })
 
-wandb.watch(cnn_dense, log='all', log_freq=100)
-wandb.run.name = "baseline_combined_lr=1e-51"
+wandb.watch(cnn_lstm, log='all', log_freq=100)
+wandb.run.name = "lstm_weighted"
 
 dataset_size = len(labels)
 train_idx, val_idx = train_test_split(list(range(dataset_size)), test_size=0.3)
@@ -61,7 +66,8 @@ for epoch in p_bar:
         batch_x = data[indices, :, :, :]
 
         # forward + backward + optimize
-        pred_cls, pred_y = cnn_dense.predict(batch_x)
+        pred_cls, pred_y = cnn_lstm .predict(batch_x)
+        # pred_cls, pred_y = cnn_dense.predict(batch_x)
         loss = criterion(pred_y, batch_y)
         acc = metric(pred_y, batch_y)
 
@@ -79,7 +85,7 @@ for epoch in p_bar:
             indices = val_idx[j:j + batch_size]
             val_batch_y = labels[indices]
             val_batch_x = data[indices, :, :, :]
-            val_pred_y = cnn_dense.predict(val_batch_x)[1]
+            val_pred_y = cnn_lstm.predict(val_batch_x)[1]
             val_loss = criterion(val_pred_y, val_batch_y)
             val_acc = metric(val_pred_y, val_batch_y)
 

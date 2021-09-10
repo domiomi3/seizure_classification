@@ -7,6 +7,8 @@ import numpy as np
 
 from torch import Tensor, LongTensor
 
+from sklearn.utils import class_weight
+
 from pyeeglab import TUHEEGSeizureDataset, Pipeline, CommonChannelSet, \
     LowestFrequency, ToDataframe, DynamicWindow, BinarizedSpearmanCorrelation, \
     ToNumpy, BandPassFilter, CorrelationToAdjacency, BandPower, GraphWithFeatures, ForkedPreprocessor
@@ -88,7 +90,7 @@ class DataPreparator:
                 if j == bckg_idx or j == absz_idx or j == mysz_idx:
                     new_labels[i] = 3
                 else:
-                    no_del_indices.append(i) # delete bckg and minority classes
+                    no_del_indices.append(i)  # delete bckg and minority classes
                     if j == fnsz_idx or j == cpsz_idx or j == spsz_idx:
                         new_labels[i] = 0  # CF combined focal seizures
                     elif j == gnsz_idx:
@@ -119,3 +121,7 @@ class DataPreparator:
 
     def get_labels(self):
         return self.clean_dataset()[1]
+
+    def get_weights(self):
+        labels = self.get_labels()
+        return Tensor(class_weight.compute_class_weight("balanced", classes=np.unique(labels), y=labels.tolist()))
